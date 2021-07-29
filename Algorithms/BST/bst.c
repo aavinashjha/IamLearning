@@ -75,6 +75,7 @@ int min(NODE *root) {
 	}
 	return root->data;
 }
+
 int height(NODE* root) {
 	// Height: Number of edges in longest path from node to a leaf node
 	// Depth: Distance from root to node
@@ -87,6 +88,19 @@ int height(NODE* root) {
 	return 1+(hl ? hl > hr: hr);
 }
 
+/*
+ * Tree is a non linear data structure hence it doesn't have a logical start and end
+ * Though root couldf be considered as start
+ * When we move to left subtree we don't have any way to go toparent and move to the right
+ * Hence we would have to store parent somewhere so that we can retreat to parent and
+ * visit the other part
+ *
+ * Tree Traversal: Process of visiting eachnode of tree once in some order
+ * Visiting a node: Reading/Processing data in a node
+ * - Depth First Search (PreOrder, InOrder, PostOrder): Visiting a child is visiting each node in that subtree
+ *   Root, Left, Right: 6 different ways 3!, but left is usually visited before right so only 3 ways are there
+ * - Breadth First Search (Level Traversal)
+ */
 int main() {
 	/*
 	 *     4
