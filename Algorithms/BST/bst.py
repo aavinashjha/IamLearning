@@ -8,6 +8,7 @@ BFS: Level Order
      - Queue
 """
 from collections import deque
+
 class Queue:
     def __init__(self):
         self.q = deque()
@@ -95,13 +96,165 @@ class BST:
 
         return traverse
 
+    def isValid(self):
+        """
+        node.left.data <= node.data
+        node.right.data >= node.data
+        This property should be satisfied by all nodes
+        def IsBST(node):
+            IsSubTreeLesser(node.left, node.data) &&
+            IsSubTreeGreater(node.right, node.data) &&
+            IsBST(node.left) && 
+            IsBST(node.right) 
+
+        O(N^2): As for every node we check all its left and right subtree
+        Optimized approach: Use range
+        Define valid range for each node recursively
+        Entire subtree should be in that range
+        This is an O(N) solution
+
+        Other solution is to do Inorder traversal
+
+        """
+
+        def isBST(node, s, e): # Both inclusive
+            if not node: return True # Empty tree is valid BST
+
+            return node.data >= s and \
+                    node.data <= e and \
+                    isBST(node.left, s, node.data) and \
+                    isBST(node.right, node.data, e)
+
+
+        return isBST(self.root, float('-inf'), float('inf'))
+
+    def isValidv2(self):
+        """
+        Do inorder traversal and whenever the previous element is not less than or equal
+        to current element we could say its not binary seearch tree.
+        """
+        prev = None
+        def inodr(node):
+            if not node: return True
+
+            if not inodr(node.left): return False
+
+            nonlocal prev
+            if prev and prev > node.data: return False
+            prev = node.data
+
+            if not inodr(node.right): return False
+            return True
+
+        return inodr(self.root)
+
+    def inorderSuccessor(self, key):
+        """
+        When we have reached a node for which inorder successor have to be found,
+        We have already traced all ancestors
+        We need to find nearest ancestor for which node falls in left subtree to ancestor
+        That could be also called deppest ancestor from root for which node is on left side
+        That is how it would be next inorder traversal element
+
+        Node with right subtree: Minimum in right subtree
+        Node without right subtree:
+          - Right child of parent: -1
+          - Left child of parent: parent
+        """
+        def minimum(node):
+            if not node: return
+            if not node.left: return node
+
+            return minimum(node.left)
+
+        def succ_right(node):
+            if not node: return
+            if not node.right: return
+            return minimum(node.right)
+
+        def isucc(node):
+            if not node: return
+
+            if key == node.data:
+                succ = succ_right(node)
+            elif key < node.data:
+                succ = isucc(node.left)
+                if not succ: succ = node
+            else:
+                succ = isucc(node.right)
+
+            return succ 
+
+        succ = isucc(self.root)
+        return succ.data if succ else -1
+
+    def delete(self, key):
+        """
+        Leaf Node i.e. no left and right child: just set parent left or right to NULL
+
+              B                                     B
+             / \           Leaf Node               / \
+            A   C           =======>              A   C
+                 \
+                  D
+
+        Node with only one child: Just set parent's parent point to node's child
+              B                                     B
+             / \           Single Child            / \
+            A   C           =======>              A   D
+                 \
+                  D
+
+        Both children: Replace node with its immediate successor
+                       Successor can have at most 1 children falling to previous case
+
+              B                            C          C
+             / \           Both Child     / \        / \
+            A   C           =======>     A   C      A   D
+                 \                            \ 
+                  D                            D
+
+        """
+        def minimum(node):
+            if not node: return
+            while node.left:
+                node = node.left
+            return node
+
+        def successor(node):
+            if not node: return
+            if not node.right: return
+            return minimum(node.right)
+            
+        def delt(node, key):
+            if not node: return node
+
+            if node.data == key:
+                if not node.left and not node.right: # Leaf node
+                    node = None
+                elif not node.left: # Only right child
+                    node = node.right
+                elif not node.right: # Only left child
+                    node = node.left
+                else: #both
+                    """
+                    Copy successor key to node
+                    and recursively run delete on right node with successor key
+                    to remove the duplicate
+                    """
+                    succ = successor(node)
+                    node.data = succ.data
+                    node.right = delt(node.right, succ.data)
+            elif key < node.data:
+                node.left = delt(node.left, key)
+            else:
+                node.right = delt(node.right, key)
+            return node
+
+        self.root = delt(self.root, key)
+
+
 bst = BST()
-"""
-bst.insert(4)
-bst.insert(2)
-bst.insert(5)
-bst.insert(1)
-"""
 bst.insert('F')
 bst.insert('D')
 bst.insert('J')
@@ -120,7 +273,65 @@ print("Postorder: {}".format(bst.postorder()))
 print("Level: {}".format(bst.level()))
 print("Search: X - {}".format(bst.search('X')))
 print("Search: G - {}".format(bst.search('G')))
+
+bst = BST()
+bst.insert(4)
+bst.insert(2)
+bst.insert(5)
+bst.insert(1)
+
+print("Valid BST: {}".format(bst.isValid()))
+print("Valid BST V2: {}".format(bst.isValidv2()))
+
+bst = BST()
+bst.root = Node(4)
+bst.root.left = Node(3)
+bst.root.right = Node(6)
+bst.root.left.right = Node(5)
+
 """
-print("Search: 6 - {}".format(bst.search(6)))
-print("Search: 5 - {}".format(bst.search(5)))
+    4
+   / \
+  3   6
+   \
+    5
 """
+print("Valid BST: {}".format(bst.isValid()))
+print("Valid BST V2: {}".format(bst.isValidv2()))
+
+bst = BST()
+bst.insert('B')
+bst.insert('A')
+bst.insert('C')
+bst.insert('D')
+print("Inorder Before Deletion: {}".format(bst.inorder()))
+#bst.delete('D') # Leaf
+# bst.delete('C') # Single child
+bst.delete('B') # Both child
+print("Inorder Before After Deletion: {}".format(bst.inorder()))
+
+
+bst = BST()
+bst.insert('B')
+bst.insert('A')
+bst.insert('C')
+bst.insert('D')
+print("Inorder Successor: A: {}".format(bst.inorderSuccessor('A')))
+print("Inorder Successor: B: {}".format(bst.inorderSuccessor('B')))
+print("Inorder Successor: C: {}".format(bst.inorderSuccessor('C')))
+print("Inorder Successor: D: {}".format(bst.inorderSuccessor('D')))
+
+
+bst = BST()
+bst.insert(15)
+bst.insert(10)
+bst.insert(8)
+bst.insert(12)
+bst.insert(6)
+bst.insert(11)
+bst.insert(20)
+bst.insert(17)
+bst.insert(16)
+bst.insert(25)
+bst.insert(28)
+print("Inorder Successor: 12: {}".format(bst.inorderSuccessor(12)))
