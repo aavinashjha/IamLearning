@@ -1,0 +1,67 @@
+Graph Theory
+------------
+Mathematical theory of the properties and applications of graphs(networks)
+
+Types of graph
+--------------
+> Undirected: Graph in which edges have no orientation. (u, v) is same as (v, u)
+> Directed: Graph in which edges have orientations.(Digraph)
+> Weighted: Edges having weights representing an arbitrary value (cost, distance, quantity etc.) (u, v, w)
+
+Special Graphs
+--------------
+Trees:
+- A tree is an undirected graph with no cycles
+- Connected graph with N nodes and N-1 edges
+
+Rooted Trees:
+- A rooted tree is a tree with a designated root node where every edge either points away from or towards the root node
+- When edges point away from the root: arborescence (out tree)
+- When edges point towards the root: anti-arborscence (in tree)
+
+Directed Acyclic Graphs(DAGs):
+- DAGs are directed graphs with no cycles
+- These graphs play important role in representing structures with dependencies
+- All out trees are DAGs, but not all DAGs are out trees
+
+Bipartite Graph:
+- A bipartite graph is one whose vertices could be split into two independent groups
+- Every edge connects between U and V
+- Graph is two colourable
+- No odd length cycle
+
+Complete Graph:
+- Worst case graphs
+- Where there is a unique edge between every pair of nodes
+- A complete graph with n vertices is represented as kn
+
+Representations
+---------------
+Adjacency Matrix:
+- Cell m[i][j] represents the edge weight of edge going from node i to node j
+- Pros:
+  > Space efficient for dense graphs
+  > Edge weight lookup is O(1)
+- Cons:
+  > Requires O(V^2) space
+  > Iterating over all edges takes O(V^2) time
+
+Adjacency list:
+--------------
+- Represented as a map from nodes to list of edges
+- A -> [(B, 4), (C, 1)]
+- Pros:
+  > Space efficient for representing sparse graphs
+  > Iterating over all the edges is efficient
+- Cons:
+  > Edge wight lookup is O(E)
+
+Edge List:
+---------
+- Represented as an unordered list of edges
+- [(u, v, w), ...] where (u, v, w) represent the cost from node u to node v is w
+- Pros:
+  > Space efficient for sparse graphs
+  > Iterating over all the edges is efficient
+- Cons:
+  > Edge weight lookup is O(E)
