@@ -1,11 +1,12 @@
 Graph Theory
 ------------
 Mathematical theory of the properties and applications of graphs(networks)
+G(V, E)
 
 Types of graph
 --------------
-> Undirected: Graph in which edges have no orientation. (u, v) is same as (v, u)
-> Directed: Graph in which edges have orientations.(Digraph)
+> Undirected: Graph in which edges have no orientation. {u, v} is same as {v, u} - set of unordered pairs
+> Directed: Graph in which edges have orientations.(Digraph) - (u, v) - set of ordered pairs
 > Weighted: Edges having weights representing an arbitrary value (cost, distance, quantity etc.) (u, v, w)
 
 Special Graphs
@@ -49,7 +50,13 @@ Adjacency Matrix:
 Adjacency list:
 --------------
 - Represented as a map from nodes to list of edges
+- Array adj of |V| linked lists
+- For each vertex u element of V adj(u) stores neighbors
 - A -> [(B, 4), (C, 1)]
+- Sometimes we don't want to maintain adjacency list, but create it on the fly as 
+  storing all the states might not be possible (Rubic's cube), hence we have function call
+  v.neighbors(), generating neighbors and returning it on the fly
+- Space: O(V+E): Linear in size of graph
 - Pros:
   > Space efficient for representing sparse graphs
   > Iterating over all the edges is efficient
@@ -65,6 +72,16 @@ Edge List:
   > Iterating over all the edges is efficient
 - Cons:
   > Edge weight lookup is O(E)
+
+Applications
+------------
+ > Web Crawling
+ > Social Networking
+ > Network broadcast
+ > Garbage collection
+ > Model checking - states model
+ > Checking mathematical conjecture 
+ > Solving puzzles and games
 
 Common Graph Theory Problems
 ----------------------------
@@ -111,3 +128,6 @@ Minimum Spanning Tree:
 Network flow:
  > With an infinite input source how much "flow" can be pushed through the network?
  > Ford-Fulkerson, Edmonds-Karp, Dinic's 
+
+NOTES:
+- Cycles could not be identified always from one point, but we need to consider all points
