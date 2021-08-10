@@ -31,3 +31,16 @@ Breadth First Search
   > Length of path will be level[v]
 - Running Time: Sum v (is element) V |adj(v)| = 2.|E| (undirected) and |E| (directed)
                 And we touch each vertex, therefore O(|V| + |E|)
+- The parent array set within the bfs is very useful in finding interesting paths through graph
+- In BFS vertices are discovered in increasing order of distances from the root
+- The unique path from root to any node uses the smallest number of edges
+- Path finding could be done recursively looking at parent
+- Connected Components
+- BFS on an undirected graph, every edge is either a tree edge or a cross edge
+- Cross edge represents cycle
+
+Two Coloring Graphs
+-------------------
+- The vertex coloring problem seeks to assign a label or color to each vertex of a graph
+  such that no edge links any two links of same color
+- A graph is bipartite if it can be colored without conflicts while using any two colors

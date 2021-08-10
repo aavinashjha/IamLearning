@@ -6,8 +6,17 @@ G(V, E)
 Types of graph
 --------------
 > Undirected: Graph in which edges have no orientation. {u, v} is same as {v, u} - set of unordered pairs
+              If represented in adjacency matrix half of space could be used in case of undirected graph
 > Directed: Graph in which edges have orientations.(Digraph) - (u, v) - set of ordered pairs
 > Weighted: Edges having weights representing an arbitrary value (cost, distance, quantity etc.) (u, v, w)
+> Simple/Non-Simple: Certain types of edges complicate the task of working with graphs.
+                     A self loop is an edge (x, x) involving only one vertex
+                     An edge (x, y) is a multi-edge if it occurs more than once in the graph
+                     Any graph which avoids these strcurctures is called simple
+> Sparse/Dense: N vertices then O(N) edges is sparse, O(N^2) edges is dense
+> Labeled/Unlabeled: Each vertex is assigned a unique name or identifier to distinguish it from all other vertices
+                     An important graph problem is isomorphism testing, determining whether the topological strcuture
+                     of the two graphs are in fact identical if we ignore the labels 
 
 Special Graphs
 --------------
@@ -62,6 +71,19 @@ Adjacency list:
   > Iterating over all the edges is efficient
 - Cons:
   > Edge wight lookup is O(E)
+  > Actually it is degree 
+- Convert from adjacency matrix to adjacency list -> O(N^2)
+
+Incident Matrix
+---------------
+    M
+N -----
+
+N row * M columns
+An incidence matrix has a row for each vertex and a column for each edge,
+such that M[i, j] = 1 if vertex i is part of edge j, otherwise M[i, j] = 0
+- Convert from adjacency list to incedence matrix O(NM)
+- Convert from incidence matrix to adjacency list O(NM)
 
 Edge List:
 ---------
@@ -76,13 +98,47 @@ Edge List:
 Applications
 ------------
  > Web Crawling
- > Social Networking
+ > Social Networking: Sparse Graph as there are few friends of each person
  > Network broadcast
  > Garbage collection
  > Model checking - states model
  > Checking mathematical conjecture 
  > Solving puzzles and games
+ > Road Networks (Weight: cost of toll, distance, time taken)
+                 Multiple lanes (service lane) could represent multi-edge
+		 Sparse graphs
+ > Electronic circuit: Sparse graphs
+ > Callgraph: Testing if every function is called
+              Piece of code is never used (dead code)
+              This is directed graph
+	      Unweighted
+	      With recursion Non-Simple
+> Cell networks: Dense graph (Any person can call anyone)
+              
 
+Flavors of graph
+-----------------
+- The first step in any graph problem is determining which flavor of graph you are dealing with
+- Learning to talk the talk is an important part of walking the walk
+- The flavor of graph has big impact on which algorithms are appropriate and efficient
+
+Traversing the graph
+--------------------
+- Traverse every edge and vertex
+- For efficiency, Visit each edge atmost twice
+- For correctness, do traversal in a systematic way so that we don't miss anything
+
+Marking the vertices
+- The key idea is we must mark each vertex when we first visit it, and keep track
+  of what have not yet completely explored 
+Each vertex will be in one of the three states:
+- undiscovered: vertex is in initial state
+- discovered: the vertex after we have encountered it, but before we have checked out all its incident edges
+- processed: the vertex after we have visited all its incident edges 
+
+A vertex cannot be processed before we discover it, so the course of traversal of the state of each vertex progresses
+from undiscovered to discovered to processed
+ 
 Common Graph Theory Problems
 ----------------------------
 Shortest Path Problem:
@@ -131,3 +187,4 @@ Network flow:
 
 NOTES:
 - Cycles could not be identified always from one point, but we need to consider all points
+- Complement of a dense graph is sparse graph
