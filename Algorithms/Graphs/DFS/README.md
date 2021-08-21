@@ -109,3 +109,23 @@ Exit Time (Explored)
   / \
  4,5 6,7
 Number of descendants: Half the difference between entry and exit times of each node 
+
+Problem:
+Arrange n children in a line, given m statements i hates j, and we want i not behind j (as i could throw a stone on j)
+- Reverse topological sort where i hates j form a directed edge between vertices which resemble children
+Arrange in minimum columns
+- indegree 0 leftmost column
+- remove edges from these vertices
+- left ones indegree 0 second column and so on
+
+MST:
+- Add an edge: O(n) new MST - find cycle
+- Remove an edge: 2 connected components, label each edge with component O(n+m),
+                  move over all edges to find minimum from component 1 to component 2
+                  in another O(m)
+
+Shortest Path:
+- BFS: Unweighted graph
+- Try all shortest path: exponential
+- Shortest path will be loop as we would consider it reducing everytime
+- MST are unaffected by negative weights
