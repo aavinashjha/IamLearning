@@ -45,6 +45,12 @@ Complete Graph:
 - Where there is a unique edge between every pair of nodes
 - A complete graph with n vertices is represented as kn
 
+Planar Graph:
+- Can it be drawn on paper without crossing the edges
+- Some algorithms run faster on planar graphs
+- Max Cut: Splitting the graph into two parts and getting maximum number of edges that connect the two parts
+	   NP Complete problem but polynomial time on planar graphs
+ 
 Representations
 ---------------
 Adjacency Matrix:
@@ -58,6 +64,7 @@ Adjacency Matrix:
 
 Adjacency list:
 --------------
+- Represents vertex adjacent to a vertex
 - Represented as a map from nodes to list of edges
 - Array adj of |V| linked lists
 - For each vertex u element of V adj(u) stores neighbors
@@ -73,6 +80,8 @@ Adjacency list:
   > Edge wight lookup is O(E)
   > Actually it is degree 
 - Convert from adjacency matrix to adjacency list -> O(N^2)
+- Adjacency list will have twice number of elements as number of edges in undirected graph
+  as one edge is represented twice
 
 Incident Matrix
 ---------------
@@ -188,3 +197,21 @@ Network flow:
 NOTES:
 - Cycles could not be identified always from one point, but we need to consider all points
 - Complement of a dense graph is sparse graph
+
+Edges are upperbounded by E = O(V^2)
+BFS space complexity is proportional to breadth of tree
+- Moving down a level doubles number of nodes
+DFS space complexity depends on height of tree
+- O(lgN) in case of balanced tree
+- DFS is superior in case of balance search tree
+
+Sometimes given a problem, like finding a cycle in graph is so intuitive (just by looking at it) that
+we are not able to think that how we would implement it or there is a method which will solve that problem
+- If adjacency list is given and human has to solve the problem, it would be done by converting to picture
+
+e < n^2 n(n-1)/2 [undirected graph]
+- adjacency list takes less space
+
+There is always a tradeoff between data structures and algorithms
+The more fancy data structures you keep, less work algorithm has to do.
+More preprocessing you do less work need to be done at runtime. [More you sweat in peace, less you bleed in war :)]
