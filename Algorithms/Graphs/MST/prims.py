@@ -35,7 +35,54 @@ Time complexity:
     - This can be done in O(nm) time, by doing a DFS or BFS to loop through all the edges,
       with a constant time test per edge and a total of n iterations
 """
+import heapq
 from collections import defaultdict
+
+VALID = 1
+INVALID = 2
+
+class Heap:
+    def __init__(self, a):
+        self.h = list()
+        self.invertedIndex = dict()
+
+        for (priority, vertex) in a:
+            entry = [priority, vertex, VALID]
+            self.invertedIndex[vertex] = entry
+            self.h.append(entry)
+
+        self.heapify()
+
+    def heapify(self):
+        heapq.heapify(self.h)
+
+    def decreaseKey(self, x, key):
+        if x not in self.invertedIndex:
+            print("{} doesn't exist".format(x))
+
+        self.invertedIndex[x][2] = INVALID
+        print('Decreasing key for {} from {} to {}'.format(x, self.invertedIndex[x][0], key))
+        entry = [key, x, VALID]
+        heapq.heappush(self.h, entry)
+        self.invertedIndex[x] = entry
+
+    def extractMin(self):
+        if self.isEmpty():
+            print("Empty heap")
+            return
+
+        entry = heapq.heappop(self.h)
+        if entry[2] == INVALID:
+            if not self.isEmpty(): return self.extractMin()
+            return
+        del self.invertedIndex[entry[1]]
+        return entry[1]
+
+    def isEmpty(self):
+        return len(self.h) == 0
+
+    def getPriority(self, v):
+        return self.invertedIndex[v][0] if v in self.invertedIndex else float('inf')
 
 class Graph:
     def __init__(self):
@@ -141,7 +188,42 @@ class Graph:
             edges.append((v, k))
         return edges
 
+    def primHeap(self, root):
+        """
+        - Start with a root vertex
+        - Grow the tree being connected to the current tree
+        - Maintain a heap to store all unvisited vertex with key as distance from the current tree
+        - Select the minimum distant vertex (remove it)
+        - Update the distance of unvisited vertices from the newly added vertex if its better than their
+          previous values
+        - Maintain the heap property
+        """
+        def relax(u, v, w):
+            # current weight of v from tree (frontier)
+            cwv = h.getPriority(v)
+            if w < cwv:
+                h.decreaseKey(v, w)
+                parent[v] = u
 
+        h = [[0, root]]
+        for v in self.g.keys():
+            if v == root: continue
+            h.append([float('inf'), v])
+
+        
+        h = Heap(h)
+        u = root
+        parent = dict()
+        discovered = set()
+
+        while not h.isEmpty():
+            u = h.extractMin()
+            for v, w in self.neighbors(u):
+                if v not in discovered:
+                    relax(u, v, w)
+            discovered.add(u)
+
+        return parent
 
 g = Graph()
 g.edge('a', 'b', 1)
@@ -149,5 +231,6 @@ g.edge('a', 'c', 4)
 g.edge('a', 'd', 3)
 g.edge('b', 'd', 2)
 g.edge('c', 'd', 5)
-#print(g.prim('b'))
-print(g.primv2('b'))
+print(g.prim('b'))
+#print(g.primv2('b'))
+print(g.primHeap('b'))

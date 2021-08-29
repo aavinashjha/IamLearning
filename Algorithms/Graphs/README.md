@@ -215,3 +215,6 @@ e < n^2 n(n-1)/2 [undirected graph]
 There is always a tradeoff between data structures and algorithms
 The more fancy data structures you keep, less work algorithm has to do.
 More preprocessing you do less work need to be done at runtime. [More you sweat in peace, less you bleed in war :)]
+
+BFS also does connected component.
+We can do everything with BFS if we want entry time, algorithms dependent on exit time require DFS
