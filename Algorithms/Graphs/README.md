@@ -218,3 +218,13 @@ More preprocessing you do less work need to be done at runtime. [More you sweat 
 
 BFS also does connected component.
 We can do everything with BFS if we want entry time, algorithms dependent on exit time require DFS
+
+Trees have only one path thatswhy we don't have concept of minimum path between two nodes in tree
+Negative cycle: means sum of all edges is negative
+
+BFS variation for negative cyles graph: Does same work as Bellman Ford
+- Phases/Levels in queue = N-1
+- O(MN)
+- Same as Bellman Ford, but more intuitive
+
+Dijkstra, Topological sort we see nodes only once, here we can see multiple times
