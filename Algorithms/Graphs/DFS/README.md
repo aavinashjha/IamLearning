@@ -35,7 +35,7 @@ Edge Classification
   > O(V+E)
 
 - Only tree edges and backward edges can exist in undirected graph
-
+- Directed graph all 4 can occur: Tree, Back, Cross and Forward
 Cycle Detection
 ---------------
 - If DFS has a back edge, G has a cycle
@@ -129,3 +129,32 @@ Shortest Path:
 - Try all shortest path: exponential
 - Shortest path will be loop as we would consider it reducing everytime
 - MST are unaffected by negative weights
+
+Colour the graph bounded by black white
+  E E E E W
+  | | | | | 
+E-E-B-W-E-E-W
+  | | | | |
+  W E E E E
+
+DFS on each
+
+Strongly connected component
+----------------------------
+- Only for directed graph
+- In each strongly connected component we can reach other nodes from any one of them
+
+- DFS: Calculate finishing time of each node O(E)
+- Reverse the edges of graph
+- Call DFS on the nodes in the reverse graph, in reverse order of finishing times O(E)
+
+- In reverse tree, DFS gives strongly connected components
+- Reverse graph: Transpose in adjacency matrix
+
+Positive Edges: O(N^2), O(MlogN) [Dijkstra]
+DAGs: O(E)
+Negative Edges and Cycles: [But no cycle with negative weight] O(NM)
+Negative Cycles: NP Complete
+Longest Path Problem: Shortest Path Problem could be reduced to longest path problem by making weights negative
+                      Which will introduce negative cycle and hence is NP Complete problem
+
