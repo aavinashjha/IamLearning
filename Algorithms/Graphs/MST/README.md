@@ -1,4 +1,16 @@
 Finding all spanning trees and looking for minimum is O(4^N) algorithm - Exponential
+Optimal substructure of MST:
+ - if e = {u, v} is an edge of some MST
+ - contract e so G becomes G/e: e compressed that is u and v merged into single vertex
+ - u and v are not removed
+ - If T' is MST of G/e then T' U {e} is MST of G
+ - Dynamic Program:
+   > Guess edge e in a  MST
+   > Contract e
+   > recurse
+   > Decontract
+   > Add e to T
+
 Both are greedy techniques
 Prim:
 - Suggests to be connected to the tree you are growing
@@ -12,4 +24,4 @@ Prim:
 
 Kruskal:
 - Let it happen in parallel, disjoint trees or forest and let the forest grow together
-- Amortized analysiz is better than Prim
+- Amortized analysis is better than Prim

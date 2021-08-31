@@ -23,6 +23,9 @@ Special Graphs
 Trees:
 - A tree is an undirected graph with no cycles
 - Connected graph with N nodes and N-1 edges
+- Connected acyclic graph
+- Subset of edges of G and hit all vertices of G
+- Spanning Forest if graph is unconnected
 
 Rooted Trees:
 - A rooted tree is a tree with a designated root node where every edge either points away from or towards the root node
