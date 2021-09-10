@@ -27,6 +27,7 @@ Heuristics:
                 so we start again from 2..m chars where and m+1 th is a mismatch
                 Therfore for every char in T we do m comparions with P
                 (n-m+1) * m comparisons = O(nm)
+                O(N*(N-M))
 """
 def match(T, P):
     N, M = len(T), len(P)
@@ -39,6 +40,11 @@ def match(T, P):
 
     return -1
 
+def match1(T, P):
+    N, M = len(T), len(P)
+    return any([P == T[i: i+M] for i in range(N-M+1)])
+
 print(match("aaaaaaaab", "aab"))
-print(match("aaaaxaaab", "axab"))
+print(match1("aaaaaaaab", "aab"))
+#print(match("aaaaxaaab", "axab"))
     

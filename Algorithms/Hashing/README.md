@@ -74,3 +74,34 @@ Universal Hashing:
 - a and b are random numbers between {0, 1, 2,.. p-1}
 - For worst case keys k1 != k2
   Pr{h(k1) == h(k2)} = 1/m
+
+How to choose m?
+- Want m = O(n) => alpha = O(1)
+- Start small m = 8
+  Grow/Shrink as necessary
+- Grow table (m->m'): Make a table of size m' (n > m)
+  where m' could be smaller than m
+- Build new hash h'
+- rehash: for each item in old table insert in new table
+- O(n+m+m') ~ O(n)
+
+- If m' = m+1 O(1+2+3+..) = O(n^2) [triangular number]
+
+Table doubling m' = 2m
+- n insertions
+- O(1+2+4+8+...+n) = O(n)
+
+- Operation takes O(n) amortized if k operations takes <= k.T(n) time
+- T(n) avg, where average over all operations
+
+Deletion:
+- if m = n/2, the shrink to m/2
+      Insert
+  2^k ----> 2^k + 1
+     <-----
+      Delete
+  O(n) per operation
+- if m = n/4 then shrink to m/2
+  amortized time becomes O(1)
+- Any constant will work till deletion constant is smaller than the insertion constant
+ 
