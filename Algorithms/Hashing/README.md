@@ -104,4 +104,72 @@ Deletion:
 - if m = n/4 then shrink to m/2
   amortized time becomes O(1)
 - Any constant will work till deletion constant is smaller than the insertion constant
- 
+
+- Open Addressing:
+  > No chaining
+  > one item per slot
+  > m (#slots) >= n (#items)
+
+Probing:
+- Hash function specifies order of slots to probe for a key (insert/search/delete)
+- h: U x {0, 1, ..., m-1} -> {1, 2, .., m-1}
+    universe   trial count     
+- For arbitrary key k,
+  h(k, 1), h(k, 2), ....h(k. m-1) is a permutation of numberss 1, 2.., m-1
+
+Insert(k): Search for empty slot, till that time probe and finally insert
+Search(k): As long as slots are occupied by keys != k keep probing until you
+           encounter k or empty slot
+Delete(k): Replace not with None but with different flag but deleteMe
+> Insert treats deleteMe same as None
+> Search continues and not halts 
+
+Probing strategies:
+- Linear Probing:
+  > h(k, i) = (h'(k)+i) mod m
+    h'(k) is ordinary hash funtion
+    h: takes extra argument for trial count
+  Problem: Cluserting: consecutive groups of occupied slots which keep longer
+  0.01 < alpha (load factor) = n/m < 0.99
+  Size of cluster is O(lgN) which causes insert/search/delete to become O(lgN) and not O(1)
+- Double hashing:
+  > h(k, i) = (h1(k) - i*h2(k)) mod m
+    if h2(k) is relatively prime to m -> permutation
+
+Uniform Hashing: Each key is equally likely to have any one of m! permutations as its probe sequence
+- maintain alpha stays around 0.5 otherwise make table again
+p = m-n/m = 1-alpha (probability of empty slot)
+expected number of trials is 1/p, therfore 1/1-alpha
+
+Python lists use segments of RAM and RAM acts like python list
+- RAM is a vast array
+- Addressed by sequential integers
+- Its first address is 0
+- Easy to implement a list atop memory
+
+Dictionary is really a list
+Keys are hashed to produce index - 32 bits of 1 or 0
+Single differnce gets scattered
+To build an index python uses bottom n bits of hash
+
+Idx Hash Key Value
+When we print dictionary it comes in same order as its stored in hash table
+
+If at first don't exist try again
+- uses backup algorithm
+
+Because collisions move keys away from their natural hash values, key order is quite sensitive to dictionary history 
+- their different history put their history in differnt order
+-Open Addressing used by python with backup paths
+
+Dicts refuse to get full
+- To keep collisions rare, dicst resize when only 2/3 full
+- When < 50k entries, size * 4
+- When > 50k entries, size * 2
+- Starts with 8 size  (Only 3 bottom bits are used)
+
+Don't rely on order
+Don't insert while iterating
+Can't have multiple keys
+
+Dictionaries trade space for time
