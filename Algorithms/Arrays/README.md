@@ -38,3 +38,10 @@ Array:
 - Jagged arrays: Array of arrays
   >> int[] []ml = new int[4][]; // 4 rows
      ml[0] = new int[6];
+- Inflection Point:
+  Where direction change
+    /
+   /  /
+  /  /
+    |
+   Inflection Point 
