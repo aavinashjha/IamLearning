@@ -72,7 +72,49 @@ Heuristics:
 
     When there is a mismatch, we check the failure function to find the new index in the pattern where we will continue
     checking against the mismatched character in the text
+
+KMP always avoid backup
+Deterministic Finite Automata: State -> Number of characters in pattern that have matched
+- Length of longest prefix of pat[] that is also suffix of tct[0..i]
+
+
+             <----------A---------------
+B,C          A                         | 
+0-----A----->1-----B----->2-----A----->3
+|<-----C-----|            |            | 
+|<--------------B, C------|            | 
+|                                      | 
+------------------------<C--------------
+
+DFA is in state 3 after reading in txt [0..6]
+BCBAABA: suffix of text[0..6]
+
+ABABAC: prefix of pat[]
+
+Key diffrences from brute-force implementation
+- need to precompute dfa from pattern
+- Text pointer i never decrements
+Linear time as i never decrements
+
+DFA construction
+    0 1 2 3 4 5 [States]
+    A B A B A C [pat[j]]
+A   1 1 3 1 5 1
+B   0 2 0 4 0 4
+C   0 0 0 0 0 6 
+[These are incoming chars in text]
+Match transition:
+    - if in state j and next char c == pat.charAt(j), go to j+1
+Mismatch transition:
+    - backup if c != pat[j]
 """
+def search(T):
+    i, j, N = 0, 0, len(T)
+    while i < N and j < M:
+        j = dfa[T[i]][j] # No backup
+    if j == M: return i-M
+    else: return N
+
 def failure(P):
     M = len(P)
 

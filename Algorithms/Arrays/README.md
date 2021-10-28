@@ -45,3 +45,21 @@ Array:
   /  /
     |
    Inflection Point 
+
+Stock Buy and sell
+- Max Profit
+  > Buy at local minima(left and right are larger)
+  > Sell at local maxima(left and right are smaller)
+  > this is same as a[i]>a[i-1] , profit += (a[i]-a[i-1])
+    transactions  will increase but result will be same
+
+
+
+Arrays/Lists as Linked Lists
+----------------------------
+- position start from 1 where indices start from 0
+
+- Finding unique where every element is two times except 1: XOR
+- Majority element n/2 times:
+ > randomization
+ > count increase if element is same, count decrement and if 0 set new prev element
