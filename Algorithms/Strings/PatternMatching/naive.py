@@ -25,7 +25,7 @@ Heuristics:
                 P: aaa..b (very less a's but similar)
                 What will happen in this case is we compare 1..m-1 chars where there is match and mth char is mismatch
                 so we start again from 2..m chars where and m+1 th is a mismatch
-                Therfore for every char in T we do m comparions with P
+                Therfore for every char in T we do m comparisons with P
                 (n-m+1) * m comparisons = O(nm)
                 O(N*(N-M))
 """
