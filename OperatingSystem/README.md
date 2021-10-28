@@ -50,3 +50,7 @@ Drawbacks:
 - Increased complexity in the form of needing to manage concurrency through mechanisms such as mutexes and condition variables.
 - With Processors with multiple cores and systems with multiple processors, threading will onluy be useful in system programming.
 
+CoreDump:
+- Cores are 1 bit store, looklike livesavers
+- coredump is basically storing data in memory and storing it in disk for debugging
+
